@@ -37,9 +37,17 @@ class BuildController extends Controller
         return view('admin.builds.edit', ['build' => $build]);
     }
 
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        $build = Build::findOrFail($id);
+        $build = Build::with('items')->findOrFail($id);
+        if($build->items()->count() > 0) {
+            $request->session()->flash('flash_error', 'Unable to delete Build since an Item is using it.');
+        }
+        else {
+            $build->delete();
+        }
+
+        return redirect('/admin/builds');
     }
 
     public function create()
@@ -90,7 +98,7 @@ class BuildController extends Controller
 
         return Datatables::of($builds)
             ->addColumn('action', function ($build) {
-                return '<a href="builds/'.$build->id.'/edit" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Update</a> <a href="items/'.$build->id.'/delete" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete</a>';
+                return '<a href="/admin/builds/'.$build->id.'/edit" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Update</a> <a href="/admin/builds/'.$build->id.'/destroy" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete</a>';
             })
             ->make(true);
     }

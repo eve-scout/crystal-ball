@@ -64,6 +64,9 @@
     </div>
 
     <div class="col-md-9">
+      @if (Session::has('flash_error'))
+        <div class="alert alert-danger" role="alert">{{ Session::get('flash_error') }}</div>
+      @endif
       @yield('content')
     </div>
   </div>

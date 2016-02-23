@@ -51,7 +51,11 @@ class ItemController extends Controller
 
     public function destroy($id)
     {
-        $item = Item::findOrFail($id);
+        $item = Item::with('attachments', 'tagged')->findOrFail($id);
+        $item->attachments()->delete();
+        $item->delete();
+
+        return redirect('/admin/items');
     }
 
     public function create()
@@ -132,7 +136,7 @@ class ItemController extends Controller
 
         return Datatables::of($items)
             ->addColumn('action', function ($item) {
-                return '<a href="items/'.$item->id.'/edit" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Update</a> <a href="items/'.$item->id.'/delete" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete</a>';
+                return '<a href="/admin/items/'.$item->id.'/edit" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Update</a> <a href="/admin/items/'.$item->id.'/destroy" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete</a>';
             })
             ->make(true);
     }

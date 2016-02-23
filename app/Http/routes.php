@@ -34,17 +34,17 @@ Route::group(['middleware' => 'web'], function () {
 
 Route::group(['prefix' => 'admin', 'middleware' => ['web']], function () {
 	Route::any('releases/data', ['as' => 'admin.releases.data', 'uses' => 'ReleaseController@anyData']);
+	Route::get('releases/{id}/destroy',['uses'=>'ReleaseController@destroy']);
 	Route::resource('releases', 'ReleaseController');
 
 	Route::any('builds/data', ['as' => 'admin.builds.data', 'uses' => 'BuildController@anyData']);
+	Route::get('builds/{id}/destroy',['uses'=>'BuildController@destroy']);
 	Route::resource('builds', 'BuildController');
 
 	Route::any('items/data', ['as' => 'admin.items.data', 'uses' => 'ItemController@anyData']);
 	Route::any('items/md-preview', ['uses' => 'ItemController@mdPreview']);
-	// Route::post('items/attachment', ['uses' => 'ItemController@postAttachment']);
+	Route::get('items/{id}/destroy',['uses'=>'ItemController@destroy']);
 	Route::resource('items', 'ItemController');
-
-
 
 	Route::resource('items/{item}/attachments', 'ItemAttachmentController');
 

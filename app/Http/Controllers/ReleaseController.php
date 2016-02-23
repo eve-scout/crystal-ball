@@ -37,9 +37,17 @@ class ReleaseController extends Controller
         return view('admin.releases.edit', ['release' => $release]);
     }
 
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        $item = Release::findOrFail($id);
+        $release = Release::with('items')->findOrFail($id);
+        if($release->items()->count() > 0) {
+            $request->session()->flash('flash_error', 'Unable to delete Release since an Item is using it.');
+        }
+        else {
+         $release->delete();
+        }
+
+        return redirect('/admin/releases');
     }
 
     public function create()
@@ -90,7 +98,7 @@ class ReleaseController extends Controller
 
         return Datatables::of($releases)
             ->addColumn('action', function ($release) {
-                return '<a href="releases/'.$release->id.'/edit" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Update</a> <a href="items/'.$release->id.'/delete" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete</a>';
+                return '<a href="/admin/releases/'.$release->id.'/edit" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Update</a> <a href="/admin/releases/'.$release->id.'/destroy" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete</a>';
             })
             ->make(true);
     }
