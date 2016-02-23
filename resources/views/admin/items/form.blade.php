@@ -102,6 +102,7 @@
 <div id="previews" class="dropzone-previews" style="display: none;"></div>
 @push('scripts')
 
+@if (isset($item) && isset($item->id))
 <script id="attachment-template" type="text/template">
     <tr id="attachment-<%- id %>">
         <td><a href="#" class="attachment-name" data-pk="<%- id %>" data-url="/admin/items/{{ $item->id }}/attachments/<%- id %>"><%- name %></a></td>
@@ -116,6 +117,7 @@
         </td>
     </tr>
 </script>
+@endif
 
 <script type="text/javascript">
     var nanobar = new Nanobar({
