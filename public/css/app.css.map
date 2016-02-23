@@ -1,0 +1,1 @@
+{"version":3,"sources":["app.scss"],"names":[],"mappings":"AAIA;EACC,YAAY,EACZ","file":"app.css","sourcesContent":["// @import \"bootstrap.scss\";\n\n// @import \"bootstrap-tagsinput.css\";\n\n.toolbar {\n\tfloat: left;\n}\n"],"sourceRoot":"/source/"}

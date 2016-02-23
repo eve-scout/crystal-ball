@@ -1,0 +1,18 @@
+{
+  "private": true,
+  "devDependencies": {
+    "gulp": "^3.8.8"
+  },
+  "dependencies": {
+    "X-editable": "github:vitalets/x-editable",
+    "ace": "github:ajaxorg/ace",
+    "ace-builds": "github:ajaxorg/ace-builds",
+    "bootstrap-markdown-editor": "github:inacho/bootstrap-markdown-editor",
+    "bootstrap-sass": "^3.0.0",
+    "bootstrap-tagsinput": "^0.7.1",
+    "dropzone": "^4.2.0",
+    "laravel-elixir": "^4.0.0",
+    "nanobar": "^0.2.1",
+    "typeahead.js": "^0.10.1"
+  }
+}
