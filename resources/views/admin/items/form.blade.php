@@ -263,6 +263,7 @@
     engine.initialize();
 
     $('#tokenfield-typeahead').tokenfield({
+      createTokensOnBlur: true,
       typeahead: [null, { source: engine.ttAdapter() }]
     });
 </script>
