@@ -10,11 +10,11 @@
     </div>
     <div class="form-group">
         <label for="release">Release</label>
-        {!! Form::select('release', $releases, null, array('class' => 'form-control')) !!}
+        {!! Form::select('release_id', $releases, null, array('class' => 'form-control')) !!}
     </div>
     <div class="form-group">
         <label for="build">Build</label>
-        {!! Form::select('build', $builds, null, array('class' => 'form-control')) !!}
+        {!! Form::select('build_id', $builds, null, array('class' => 'form-control')) !!}
     </div>
     <div class="form-group">
         <label for="tags">Tags</label>

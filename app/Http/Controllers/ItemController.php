@@ -32,8 +32,8 @@ class ItemController extends Controller
         $item = Item::with('attachments', 'tagged')->findOrFail($id);
         $item->tagNames = implode(',', $item->tagNames());
 
-        $builds = Build::orderBy('name')->lists('name', 'id');
-        $releases = Release::orderBy('name')->lists('name', 'id');
+        $builds = Build::orderBy('build_date', 'desc')->lists('name', 'id');
+        $releases = Release::orderBy('release_date', 'desc')->lists('name', 'id');
         $typeahead_tags = Item::existingTags();
 
         return view('admin.items.edit', ['item' => $item, 'builds' => $builds, 'releases' => $releases, 'typeahead_tags' => $typeahead_tags]);
@@ -43,8 +43,8 @@ class ItemController extends Controller
     {
         $item = Item::with('attachments', 'tagged')->findOrFail($id);
 
-        $builds = Build::orderBy('name')->lists('name', 'id');
-        $releases = Release::orderBy('name')->lists('name', 'id');
+        $builds = Build::orderBy('build_date', 'desc')->lists('name', 'id');
+        $releases = Release::orderBy('release_date', 'desc')->lists('name', 'id');
 
         return view('admin.items.edit', ['item' => $item, 'builds' => $builds, 'releases' => $releases]);
     }
@@ -60,8 +60,8 @@ class ItemController extends Controller
 
     public function create()
     {
-        $builds = Build::orderBy('name')->lists('name', 'id');
-        $releases = Release::orderBy('name')->lists('name', 'id');
+        $builds = Build::orderBy('build_date', 'desc')->lists('name', 'id');
+        $releases = Release::orderBy('release_date', 'desc')->lists('name', 'id');
         $typeahead_tags = Item::existingTags();
 
         return view('admin.items.create', ['builds' => $builds, 'releases' => $releases, 'typeahead_tags' => $typeahead_tags]);
@@ -79,8 +79,8 @@ class ItemController extends Controller
 
         $item->itemID = $request->itemID;
         $item->name = $request->name;
-        $item->build_id = $request->build;
-        $item->release_id = $request->release;
+        $item->build_id = $request->build_id;
+        $item->release_id = $request->release_id;
         $item->status = $request->status;
         $item->description = $request->description;
         $item->notes = $request->notes;
@@ -105,8 +105,8 @@ class ItemController extends Controller
         $item = new Item;
         $item->itemID = $request->itemID;
         $item->name = $request->name;
-        $item->build_id = $request->build;
-        $item->release_id = $request->release;
+        $item->build_id = $request->build_id;
+        $item->release_id = $request->release_id;
         $item->description = $request->description;
         $item->notes = $request->notes;
         $item->save();
